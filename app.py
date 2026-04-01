@@ -50,15 +50,15 @@ if st.button("🚀 Generate Individualized Risk Report"):
     
     st.subheader("📊 Trajectory Probabilities")
     col1, col2, col3 = st.columns(3)
-    col1.metric("Class 1: Persistent High Risk", f"{probas[0]*100:.1f}%")
-    col2.metric("Class 2: Persistent Healthy", f"{probas[1]*100:.1f}%")
-    col3.metric("Class 3: Late-onset Incident Risk", f"{probas[2]*100:.1f}%", 
+    col1.metric("Class 1: Chronically High", f"{probas[0]*100:.1f}%")
+    col2.metric("Class 2: Consistently Low", f"{probas[1]*100:.1f}%")
+    col3.metric("Class 3: Rapidly Escalating Risk", f"{probas[2]*100:.1f}%", 
                 delta="High Risk Warning" if probas[2]>0.3 else None, delta_color="inverse")
     
-    st.progress(float(probas[2]), text="Class 3 Risk Indicator")
+    st.progress(float(probas[2]), text="Class 3: Rapidly Escalating Risk Indicator")
 
     st.subheader("🔍 Individualized Risk Attribution (SHAP Waterfall Plot)")
-    st.markdown("*Note: **Red bars** indicate factors driving the risk higher for Class 3, while **blue bars** indicate protective factors lowering the risk.*")
+    st.markdown("*Note: **Red bars** indicate factors driving the risk higher for the Rapidly Escalating trajectory (Class 3), while **blue bars** indicate protective factors lowering the risk.*")
     
     explainer = shap.LinearExplainer(model, scaler.mean_.reshape(1, -1))
     shap_values = explainer(input_scaled)
